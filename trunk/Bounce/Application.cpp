@@ -62,6 +62,7 @@ Application::Application()
 
 Application::~Application()
 {
+	while (!GSStack.empty()) popGS();
 	glfwTerminate();
 }
 
