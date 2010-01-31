@@ -1,0 +1,10 @@
+size 2 3
+texture box01.png
+polygon 4
+0 0
+2 0
+2 3
+0 3
+density 20
+friction 0.8
+restitution 0.3

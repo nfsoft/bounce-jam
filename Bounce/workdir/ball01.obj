@@ -1,0 +1,6 @@
+size 1.6 1.6
+texture ball.png
+circle 0.8 0.8 0.8
+density 10
+friction 0.3
+restitution 0.65
