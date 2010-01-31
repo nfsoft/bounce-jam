@@ -1,0 +1,10 @@
+size 1 1
+texture err.png
+polygon 4
+0 0
+1 0
+1 1
+0 1
+density 20
+friction 0.5
+restitution 0.3
