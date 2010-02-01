@@ -31,7 +31,7 @@ Level::Level(b2World *world)
 	this->world=world;
 	actor=0;
 
-	groundTexture = TextureManager::getSingleton()->loadTexture("ground01.png");
+	groundTexture = TextureManager::getSingleton()->loadTexture("ground01.png", true);
 }
 
 Actor* Level::loadLevel(string filename)

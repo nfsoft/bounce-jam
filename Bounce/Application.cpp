@@ -28,7 +28,7 @@ Application::Application()
 	if (!glfwInit()) {ERR_UGLY(""); return;}
 
 	glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
-	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 16);
+	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 8);
 	if( !glfwOpenWindow( 960,540, 0,0,0,4,0,0, GLFW_WINDOW ) ) //TODO: Settings loading
 //	if( !glfwOpenWindow( 1920,1080, 0,0,0,4,0,0, GLFW_FULLSCREEN ) )
 	{
