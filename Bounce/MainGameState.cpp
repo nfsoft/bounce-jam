@@ -36,7 +36,7 @@ int MainGameState::init(Application* application)
 
 	actor = level->loadLevel("level01.lev");
 
-	sky = TextureManager::getSingleton()->loadTexture("clearsky.png"); //TODO: think about putting sky into Level instead
+	sky = TextureManager::getSingleton()->loadTexture("sky01.png"); //TODO: think about putting sky into Level instead
 
 	return 0;
 }
@@ -106,13 +106,13 @@ void MainGameState::processGraphics()
 		glBindTexture(GL_TEXTURE_2D, sky);
 
 		glBegin(GL_QUADS);
-			glTexCoord2f(wx/13.0f, -wy/13.0f+1.2f);
+			glTexCoord2f(wx/32.0f, -wy/32.0f+1.2f);
 			glVertex2f(.0f, .0f);
-			glTexCoord2f(wx/13.0f+2.1f, -wy/13.0f+1.2f);
+			glTexCoord2f(wx/32.0f+2.1f, -wy/32.0f+1.2f);
 			glVertex2f(GAMEWIDTH, .0f);
-			glTexCoord2f(wx/13.0f+2.1f, -wy/13.0f);
+			glTexCoord2f(wx/32.0f+2.1f, -wy/32.0f);
 			glVertex2f(GAMEWIDTH, GAMEHEIGHT);
-			glTexCoord2f(wx/13.0f, -wy/13.0f);
+			glTexCoord2f(wx/32.0f, -wy/32.0f);
 			glVertex2f(.0f, GAMEHEIGHT);
 		glEnd();
 
