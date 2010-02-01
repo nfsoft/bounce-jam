@@ -76,6 +76,9 @@ Actor* Level::loadLevel(string filename)
 			}
 
 			b2Polygon polygon(verts,vertcount);
+
+			delete [] verts;
+
 			b2Polygon polys[POLYGON_DECOMPOSITION_LIMIT];
 			int count = DecomposeConvex(&polygon,polys,32);
 
