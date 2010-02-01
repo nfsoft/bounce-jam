@@ -17,6 +17,7 @@ namespace BounceEditor
 
         private PointF actorPosition = new PointF(2,2);
         private bool actorPlacingMode = false;
+        private bool dragging = false;
 
         public static float SCALE;
 
@@ -98,10 +99,11 @@ namespace BounceEditor
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
+            if (dragging) { dragging = false; return; }
             if (actorPlacingMode)
             {
-                actorPosition.X = (e.X - Convert.ToInt32(txtX.Text)) / SCALE;
-                actorPosition.Y = (pictureBox1.Height - e.Y - Convert.ToInt32(txtY.Text)) / SCALE;
+                actorPosition.X = e.X / SCALE + Convert.ToSingle(txtX.Text);
+                actorPosition.Y = (pictureBox1.Height - e.Y) / SCALE + Convert.ToSingle(txtY.Text);
                 actorPlacingMode = false;
                 Refresh();
                 return;
@@ -127,7 +129,7 @@ namespace BounceEditor
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left) { return; } else { dragging = true; }
             if (objectListForm.isInDynamicMode())
             {
                 if (objectListForm.getDynamicList().SelectedItem == null) return;
@@ -138,6 +140,24 @@ namespace BounceEditor
                 if (objectListForm.getStaticList().SelectedNode == null) return;
                 if (objectListForm.getStaticList().SelectedNode.Text == "Point")
                     objectListForm.getStaticList().SelectedNode.Tag = new PointF(e.X / SCALE + Convert.ToSingle(txtX.Text), (pictureBox1.Height - e.Y) / SCALE + Convert.ToSingle(txtY.Text));
+                else if (objectListForm.getStaticList().SelectedNode.Text == "Polygon" && objectListForm.getStaticList().SelectedNode.Nodes.Count > 0)
+                {
+                    PointF oldCenter = PointF.Empty;
+                    foreach (TreeNode point in objectListForm.getStaticList().SelectedNode.Nodes)
+                    {
+                        oldCenter.X += ((PointF)point.Tag).X;
+                        oldCenter.Y += ((PointF)point.Tag).Y;
+                    }
+                    oldCenter.X /= objectListForm.getStaticList().SelectedNode.Nodes.Count;
+                    oldCenter.Y /= objectListForm.getStaticList().SelectedNode.Nodes.Count;
+
+                    PointF shift = new PointF(e.X / SCALE + Convert.ToSingle(txtX.Text) - oldCenter.X, (pictureBox1.Height - e.Y) / SCALE + Convert.ToSingle(txtY.Text) - oldCenter.Y);
+
+                    foreach (TreeNode point in objectListForm.getStaticList().SelectedNode.Nodes)
+                    {
+                        point.Tag = new PointF(((PointF)point.Tag).X + shift.X, ((PointF)point.Tag).Y + shift.Y);
+                    }
+                }
             }
             objectListForm.Refresh();
             Refresh();

@@ -48,6 +48,9 @@
             this.addDynamicObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeDynamicObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RotationBar = new System.Windows.Forms.HScrollBar();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.RootContextMenu.SuspendLayout();
             this.BodyContextMenu.SuspendLayout();
             this.PolygonContextMenu.SuspendLayout();
@@ -85,9 +88,10 @@
             // 
             this.BodyContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newPolygonToolStripMenuItem,
+            this.toolStripSeparator1,
             this.removeBodyToolStripMenuItem});
             this.BodyContextMenu.Name = "BodyContextMenu";
-            this.BodyContextMenu.Size = new System.Drawing.Size(148, 48);
+            this.BodyContextMenu.Size = new System.Drawing.Size(148, 54);
             // 
             // newPolygonToolStripMenuItem
             // 
@@ -107,9 +111,10 @@
             // 
             this.PolygonContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPointToolStripMenuItem,
+            this.toolStripSeparator2,
             this.removePolygonToolStripMenuItem});
             this.PolygonContextMenu.Name = "PolygonContextMenu";
-            this.PolygonContextMenu.Size = new System.Drawing.Size(162, 48);
+            this.PolygonContextMenu.Size = new System.Drawing.Size(162, 54);
             // 
             // addPointToolStripMenuItem
             // 
@@ -186,9 +191,10 @@
             // 
             this.DynamicListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addDynamicObjectToolStripMenuItem,
+            this.toolStripSeparator3,
             this.removeDynamicObjectToolStripMenuItem});
             this.DynamicListContextMenu.Name = "DynamicListContextMenu";
-            this.DynamicListContextMenu.Size = new System.Drawing.Size(206, 48);
+            this.DynamicListContextMenu.Size = new System.Drawing.Size(206, 54);
             // 
             // addDynamicObjectToolStripMenuItem
             // 
@@ -215,6 +221,21 @@
             this.RotationBar.Visible = false;
             this.RotationBar.ValueChanged += new System.EventHandler(this.RotationBar_ValueChanged);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(158, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
+            // 
             // ObjectListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,13 +244,14 @@
             this.ControlBox = false;
             this.Controls.Add(this.RotationBar);
             this.Controls.Add(this.tabControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ObjectListForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Objects";
             this.Load += new System.EventHandler(this.ObjectListForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ObjectListForm_Paint);
+            this.Resize += new System.EventHandler(this.ObjectListForm_Resize);
             this.RootContextMenu.ResumeLayout(false);
             this.BodyContextMenu.ResumeLayout(false);
             this.PolygonContextMenu.ResumeLayout(false);
@@ -263,5 +285,8 @@
         private System.Windows.Forms.ToolStripMenuItem addDynamicObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeDynamicObjectToolStripMenuItem;
         private System.Windows.Forms.HScrollBar RotationBar;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

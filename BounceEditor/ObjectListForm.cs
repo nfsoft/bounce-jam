@@ -65,6 +65,7 @@ namespace BounceEditor
             tmp.ContextMenuStrip = PointContextMenu;
             polygon.Nodes.Add(tmp);
             polygon.Expand();
+            tmp.EnsureVisible();
         }
 
         private void staticList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -128,6 +129,7 @@ namespace BounceEditor
                             string[] loc = ln.Split(' ');
                             addPoint(polygonNode, new PointF(Convert.ToSingle(loc[0]), Convert.ToSingle(loc[1])));
                         }
+                        polygonNode.Collapse();
                     }
                     ln = src.ReadLine();
                 }
@@ -233,6 +235,12 @@ namespace BounceEditor
             ((DynamicPlacement)dynamicList.SelectedItem).rotation = RotationBar.Value;
             mainForm.Refresh();
             Refresh();
+        }
+
+        private void ObjectListForm_Resize(object sender, EventArgs e)
+        {
+            tabControl1.Width = staticList.Width = dynamicList.Width = this.ClientRectangle.Width;
+            tabControl1.Height = staticList.Height = dynamicList.Height = this.ClientRectangle.Height;
         }
     }
 }
