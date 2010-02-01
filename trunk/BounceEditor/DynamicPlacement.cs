@@ -10,7 +10,7 @@ namespace BounceEditor
     public class DynamicPlacement
     {
         public PointF position = new PointF(5,5);
-        public float rotation = 10;
+        public float rotation = 0;
         public DynamicObject dynamicObject;
         //public Graphics rotated;
 
