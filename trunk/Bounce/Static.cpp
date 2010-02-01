@@ -43,7 +43,7 @@ void Static::draw()
 		}
 		glEnd();
 
-#ifdef _DEBUG //Polygon outlines
+/*#ifdef _DEBUG //Polygon outlines
 		glColor3f(0,0,0);
 		glDisable(GL_TEXTURE_2D);
 		glPolygonMode(GL_FRONT,GL_LINE);
@@ -57,7 +57,7 @@ void Static::draw()
 		glPolygonMode(GL_FRONT,GL_FILL);
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1,1,1);
-#endif
+#endif*/
 	}
 }
 Static::~Static()

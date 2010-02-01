@@ -36,7 +36,7 @@ int MainGameState::init(Application* application)
 
 	actor = level->loadLevel("level01.lev");
 
-	sky = TextureManager::getSingleton()->loadTexture("sky01.png"); //TODO: think about putting sky into Level instead
+	sky = TextureManager::getSingleton()->loadTexture("sky01.png", true); //TODO: think about putting sky into Level instead
 
 	return 0;
 }
