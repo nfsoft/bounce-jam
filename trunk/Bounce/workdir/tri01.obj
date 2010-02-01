@@ -1,0 +1,9 @@
+size 1 1
+texture tri01.png
+polygon 3
+0 0
+1 0
+0 1
+density 20
+friction 0.5
+restitution 0.3
