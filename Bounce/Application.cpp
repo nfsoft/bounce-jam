@@ -23,14 +23,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "MainGameState.h"
 
+#include "Configuration.h"
+
 Application::Application()
 {
 	if (!glfwInit()) {ERR_UGLY(""); return;}
 
+	Configuration* config = Configuration::getSingleton();
+	config->loadFile("Bounce.cfg");
+
 	glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
-	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
-	if( !glfwOpenWindow( 960,540, 0,0,0,4,0,0, GLFW_WINDOW ) ) //TODO: Settings loading
-//	if( !glfwOpenWindow( 1920,1080, 0,0,0,4,0,0, GLFW_FULLSCREEN ) )
+	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, config->getValueInt("window_fsaa_samples"));
+	if( !glfwOpenWindow( config->getValueInt("window_width"),config->getValueInt("window_height"), 0,0,0,0,0,0, config->getValueBool("fullscreen") ? GLFW_FULLSCREEN : GLFW_WINDOW ) )
 	{
 		ERR_UGLY("");
 		glfwTerminate();
@@ -42,12 +46,27 @@ Application::Application()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0f,GAMEWIDTH,0,GAMEHEIGHT,-1.0f,1.0f); //TODO: Different aspect ratio support
-   
+	float windowAspRat = config->getValue("window_width") / config->getValue("window_height");
+	float gameAspRat = ((float)GAMEWIDTH)/((float)GAMEHEIGHT);
+	float xpadding = .0f, ypadding = .0f;
+	if (windowAspRat < gameAspRat) //more square than 16:9 (16:10,4:3,5:4,..)
+	{
+		ypadding = (GAMEWIDTH/windowAspRat - GAMEHEIGHT)/2.0f;
+	} else { // wider than 16:9 (strange..)
+		xpadding = (GAMEHEIGHT*windowAspRat - GAMEWIDTH)/2.0f;
+	}
+	glOrtho(-xpadding,GAMEWIDTH+xpadding,-ypadding,GAMEHEIGHT+ypadding,-1.0f,1.0f);
+	if (config->getValueBool("scissor"))
+	{
+		glScissor((int)(xpadding/((float)GAMEWIDTH+2*xpadding)*config->getValue("window_width")),
+			(int)(ypadding/((float)GAMEHEIGHT+2*ypadding)*config->getValue("window_height")),
+			(int)((GAMEWIDTH)/((float)GAMEWIDTH+2*xpadding)*config->getValue("window_width")),
+			(int)((GAMEHEIGHT)/((float)GAMEHEIGHT+2*ypadding)*config->getValue("window_height")));
+		glEnable(GL_SCISSOR_TEST);
+	}
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glClearColor(0.23f, 0.725f, 1.0f, 1.0f);
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
