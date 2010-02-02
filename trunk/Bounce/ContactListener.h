@@ -29,14 +29,16 @@ private:
 	bool actorAbleToJump;
 	b2Vec2 actorJumpVector;
 public:
-	ContactListener() {reset();}
+	ContactListener() {
+		reset();
+	}
     void Result(const b2ContactResult* point)
     {
 		void* udata1=point->shape1->GetBody()->GetUserData();
 		void* udata2=point->shape2->GetBody()->GetUserData();
 		if (udata1 && ((Object*)udata1)->getObjectType()==OBJECT_ACTOR)
 		{
-			actorJumpVector+=-point->normal;
+			actorJumpVector-=point->normal;
 			actorAbleToJump=true;
 		}
 		if (udata2 && ((Object*)udata2)->getObjectType()==OBJECT_ACTOR)
@@ -45,8 +47,14 @@ public:
 			actorAbleToJump=true;
 		}
     }
-	bool isActorAbleToJump() {return actorAbleToJump;}
-	b2Vec2& getActorJumpVector() {actorAbleToJump=false; return actorJumpVector;} //"destructive" read
+	bool isActorAbleToJump() {
+		return actorAbleToJump;
+	}
+	b2Vec2& getActorJumpVector() { //"destructive" read
+		actorAbleToJump=false;
+		actorJumpVector.Normalize();
+		return actorJumpVector;
+	}
 	void reset()
 	{
 		actorAbleToJump=false;

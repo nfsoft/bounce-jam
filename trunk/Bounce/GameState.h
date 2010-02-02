@@ -27,7 +27,7 @@ public:
 	virtual int init(Application* application) = 0;
 	virtual void destroy() = 0;
 	virtual void processEvents() = 0;
-	virtual void processLogic(double time) = 0;
+	virtual void processLogic(float time) = 0;
 	virtual void processGraphics() = 0;
 	virtual ~GameState() = 0 {}
 };

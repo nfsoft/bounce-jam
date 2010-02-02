@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 class Object: public Drawable
 {
-private:
+protected:
 	float rotation;
 	float position[2];
 	float size[2];

@@ -34,6 +34,7 @@ private:
 	Application* application;
 	b2World* world;
 	float timeSinceLastSimulation;
+	bool rightAfterSimulation;
 	Actor* actor;
 	ContactListener* contactListener;
 	Level* level;
@@ -42,7 +43,7 @@ public:
 	int init(Application* application);
 	void destroy();
 	void processEvents();
-	void processLogic(double time);
+	void processLogic(float time);
 	void processGraphics();
 };
 

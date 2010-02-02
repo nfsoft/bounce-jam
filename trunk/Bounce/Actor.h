@@ -21,12 +21,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "Object.h"
 
+#define JUMP_INTERVAL .2f //in seconds
+
 class Actor : public Object
 {
 private:
+	float timeSinceLastJump;
 public:
 	int getObjectType() {return OBJECT_ACTOR;}
-	Actor(float posx, float posy, float rot) : Object(posx,posy,rot) {}
+	Actor(float posx, float posy, float rot) : Object(posx,posy,rot)
+	{
+		timeSinceLastJump = .0f;
+	}
+	void addTime(float passed)
+	{
+		timeSinceLastJump += passed;
+	}
+	bool canJump()
+	{
+		return timeSinceLastJump >= JUMP_INTERVAL;
+	}
+	void jump(b2Vec2& vector)
+	{
+		body->ApplyImpulse(vector, body->GetWorldCenter());
+		timeSinceLastJump = .0f;
+	}
 };
 
 #endif

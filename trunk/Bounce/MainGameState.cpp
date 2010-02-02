@@ -31,6 +31,7 @@ int MainGameState::init(Application* application)
 	world = new b2World(worldAABB, b2Vec2(0.0f, -9.81f), true);
 	world->SetContactListener(contactListener);
 	timeSinceLastSimulation = .0f;
+	rightAfterSimulation = false;
 
 	level = new Level(world);
 
@@ -63,28 +64,41 @@ void MainGameState::processEvents()
 		actor->getBody()->ApplyForce(b2Vec2(300.0f,0.0f),actor->getBody()->GetWorldCenter()+b2Vec2(0,1));
 	if (glfwGetKey(GLFW_KEY_LEFT) && actor->getBody()->GetAngularVelocity() < 10)
 		actor->getBody()->ApplyForce(b2Vec2(-300.0f,0.0f),actor->getBody()->GetWorldCenter()+b2Vec2(0,1));
-	if (glfwGetKey(GLFW_KEY_UP) && contactListener->isActorAbleToJump())
+	if (glfwGetKey(GLFW_KEY_SPACE) && contactListener->isActorAbleToJump() && actor->canJump())
 	{
-		b2Vec2& vector=contactListener->getActorJumpVector();
-		vector.Normalize();
-		vector*=40.0f;
-		actor->getBody()->ApplyImpulse(vector,actor->getBody()->GetWorldCenter());
-	}
-	/*if (glfwGetKey(GLFW_KEY_DOWN))
-	{
-		actor->getBody()->ApplyForce(b2Vec2(0,9.81f),actor->getBody()->GetWorldCenter());
-	}*/
+		b2Vec2 vector(0,0);
+		b2Vec2 normal = contactListener->getActorJumpVector();
 
+		if (glfwGetKey(GLFW_KEY_LEFT)) {vector+=b2Vec2(-1,0);}
+		if (glfwGetKey(GLFW_KEY_RIGHT)) {vector+=b2Vec2(1,0);}
+		if (vector.Length() == 0)
+		{
+			vector+=b2Vec2(0,0.6f);
+		} else {
+			vector+=b2Vec2(0,0.6f);
+			vector.Normalize();
+		}
+		vector += contactListener->getActorJumpVector();
+		vector*=80.0f;
+		actor->jump(vector);
+	}
+	if (glfwGetKey(GLFW_KEY_DOWN) && rightAfterSimulation) { //TODO: Probably just debugging purpose, doesn't respect slow motion
+		b2Vec2 vel=actor->getBody()->GetLinearVelocity();
+		vel.x*=0.96f;
+		actor->getBody()->SetLinearVelocity(vel);
+	}
 }
-void MainGameState::processLogic(double time)
+void MainGameState::processLogic(float time)
 {
-	timeSinceLastSimulation += (float)time;
+	float slowMotionFactor = glfwGetKey('S') ? 2.0f : 1.0f; //Is it evil to call glfwGetKey here? :)
+	timeSinceLastSimulation += time;
+	actor->addTime(time/slowMotionFactor);
 	if (timeSinceLastSimulation >= TIMESTEP)
 	{
 		if (!actor->getBody()->IsSleeping()) contactListener->reset();
 		while (timeSinceLastSimulation >= TIMESTEP)
 		{
-			world->Step(TIMESTEP,5);
+			world->Step(TIMESTEP/slowMotionFactor,5);
 			timeSinceLastSimulation -= TIMESTEP;
 		}
 		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
@@ -95,6 +109,9 @@ void MainGameState::processLogic(double time)
 				((Object*)b->GetUserData())->setTransform(pos.x, pos.y, b->GetAngle()*(180.0f/b2_pi));
 			}
 		}
+		rightAfterSimulation = true;
+	} else {
+		rightAfterSimulation = false;
 	}
 }
 void MainGameState::processGraphics()
