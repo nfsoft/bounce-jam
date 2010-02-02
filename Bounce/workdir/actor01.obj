@@ -1,6 +1,6 @@
 size 1 1
 texture actor01.png
 circle 0.5 0.5 0.5
-density 18
+density 28
 friction 0.6
-restitution 0.6
+restitution 0.4

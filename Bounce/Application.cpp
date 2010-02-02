@@ -71,20 +71,20 @@ void Application::run()
 	pushGS(new MainGameState());
 	GSStack.top()->init(this);
 
-	double time = glfwGetTime();
+	float time = (float)glfwGetTime();
 
-	double fpstime = 0;
+	float fpstime = 0;
 	int fpsframes = 0;
 
 	bool running=true;
 	while (running)
 	{
 		GSStack.top()->processEvents();
-		double newtime = glfwGetTime();
+		float newtime = (float)glfwGetTime();
 		GSStack.top()->processLogic(newtime - time);
 		++fpsframes;
 		fpstime+= newtime - time;
-		if (fpstime >= 1) { printf("%f\n",((double)fpsframes)/fpstime); fpsframes=1; fpstime=newtime - time;}
+		if (fpstime >= 1) { printf("%f\n",((float)fpsframes)/fpstime); fpsframes=1; fpstime=newtime - time;}
 		
 		time = newtime;
 

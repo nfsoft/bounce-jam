@@ -17,7 +17,6 @@ namespace BounceEditor
 
         private PointF actorPosition = new PointF(2,2);
         private bool actorPlacingMode = false;
-        private bool dragging = false;
 
         public static float SCALE;
 
@@ -99,7 +98,6 @@ namespace BounceEditor
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (dragging) { dragging = false; return; }
             if (actorPlacingMode)
             {
                 actorPosition.X = e.X / SCALE + Convert.ToSingle(txtX.Text);
@@ -108,6 +106,7 @@ namespace BounceEditor
                 Refresh();
                 return;
             }
+
             else if (objectListForm.isInDynamicMode())
             {
                 if (objectListForm.getDynamicList().SelectedItem == null) return;
@@ -117,7 +116,7 @@ namespace BounceEditor
             else
             {
                 if (objectListForm.getStaticList().SelectedNode == null) return;
-                if (objectListForm.getStaticList().SelectedNode.Text == "Polygon")
+                if (objectListForm.getStaticList().SelectedNode.Text == "Polygon" && e.Button == MouseButtons.Right)
                 {
                     objectListForm.addPoint(objectListForm.getStaticList().SelectedNode, new PointF(e.X / SCALE + Convert.ToSingle(txtX.Text), (pictureBox1.Height - e.Y) / SCALE + Convert.ToSingle(txtY.Text)));
                 }
@@ -129,7 +128,7 @@ namespace BounceEditor
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) { return; } else { dragging = true; }
+            if (e.Button != MouseButtons.Left) return;
             if (objectListForm.isInDynamicMode())
             {
                 if (objectListForm.getDynamicList().SelectedItem == null) return;

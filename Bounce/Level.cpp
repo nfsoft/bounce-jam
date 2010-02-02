@@ -84,6 +84,7 @@ Actor* Level::loadLevel(string filename)
 
 			for (int i=0;i<MIN(count,POLYGON_DECOMPOSITION_LIMIT);++i)
 			{
+				if (!polys[i].IsUsable()) continue;
 				b2PolygonDef def = globdef;
 				polys[i].AddTo(def);
 				body->createAndAddPolygon(def);
