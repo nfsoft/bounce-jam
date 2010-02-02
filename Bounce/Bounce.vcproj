@@ -209,6 +209,10 @@
 				RelativePath=".\Static.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\TextureManager.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
