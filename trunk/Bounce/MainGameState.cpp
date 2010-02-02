@@ -73,9 +73,9 @@ void MainGameState::processEvents()
 		if (glfwGetKey(GLFW_KEY_RIGHT)) {vector+=b2Vec2(1,0);}
 		if (vector.Length() == 0)
 		{
-			vector+=b2Vec2(0,0.6f);
+			vector+=b2Vec2(0,0.7f);
 		} else {
-			vector+=b2Vec2(0,0.6f);
+			vector+=b2Vec2(0,0.7f);
 			vector.Normalize();
 		}
 		vector += contactListener->getActorJumpVector();

@@ -42,7 +42,7 @@ Application::Application()
 	}
 
 	glfwSetWindowTitle("Bounce Jam");
-	glfwSwapInterval(0);
+	glfwSwapInterval(config->getValueInt("vsync"));
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -106,8 +106,6 @@ void Application::run()
 		if (fpstime >= 1) { printf("%f\n",((float)fpsframes)/fpstime); fpsframes=1; fpstime=newtime - time;}
 		
 		time = newtime;
-
-		glClear( GL_COLOR_BUFFER_BIT );
 
 		glLoadIdentity();
 
