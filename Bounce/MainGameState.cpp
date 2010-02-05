@@ -60,9 +60,9 @@ void MainGameState::processEvents()
 	if (glfwGetKey('R')) actor=level->restart();
 
 
-	if (glfwGetKey(GLFW_KEY_RIGHT) && actor->getBody()->GetAngularVelocity() > -10)
+	if (glfwGetKey(GLFW_KEY_RIGHT) && actor->getBody()->GetAngularVelocity() > -10 && rightAfterSimulation)
 		actor->getBody()->ApplyForce(b2Vec2(300.0f,0.0f),actor->getBody()->GetWorldCenter()+b2Vec2(0,1));
-	if (glfwGetKey(GLFW_KEY_LEFT) && actor->getBody()->GetAngularVelocity() < 10)
+	if (glfwGetKey(GLFW_KEY_LEFT) && actor->getBody()->GetAngularVelocity() < 10 && rightAfterSimulation)
 		actor->getBody()->ApplyForce(b2Vec2(-300.0f,0.0f),actor->getBody()->GetWorldCenter()+b2Vec2(0,1));
 	if (glfwGetKey(GLFW_KEY_SPACE) && contactListener->isActorAbleToJump() && actor->canJump())
 	{
